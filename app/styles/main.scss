@@ -1,5 +1,12 @@
+$accent-color: #ff944d;
+$font-color: #000;
+
+$cal-width: 75%;
+
 body, html{
+  color: $font-color;
   background-color: grey;
   margin: 0;
   padding: 0;
+  font-family: sans-serif;
 }

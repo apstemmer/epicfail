@@ -1,8 +1,21 @@
+@import "main.scss";
+
 .Month{
-  background-color: cyan;
+  background-color: white;
   float:left;
-  width: 100%;
+  width:$cal-width;
   h3{
     text-align: center;
+  }
+  .day-name{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li{
+      text-transform: uppercase;
+      text-align: center;
+      width: 1 / 7 * 100%;
+      display: inline-block;
+    }
   }
 }

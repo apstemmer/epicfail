@@ -10081,6 +10081,8 @@ var _react = __webpack_require__(20);
 
 var _react2 = _interopRequireDefault(_react);
 
+__webpack_require__(198);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -10099,9 +10101,17 @@ var ControlBar = function (_React$Component) {
   }
 
   _createClass(ControlBar, [{
-    key: "render",
+    key: 'render',
     value: function render() {
-      return _react2.default.createElement("div", { className: "ControlBar" });
+      return _react2.default.createElement(
+        'div',
+        { className: 'ControlBar' },
+        _react2.default.createElement(
+          'div',
+          { className: 'login-button' },
+          'login'
+        )
+      );
     }
   }]);
 
@@ -10140,29 +10150,36 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Day = function (_React$Component) {
   _inherits(Day, _React$Component);
 
-  function Day() {
+  function Day(props) {
     _classCallCheck(this, Day);
 
-    return _possibleConstructorReturn(this, (Day.__proto__ || Object.getPrototypeOf(Day)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Day.__proto__ || Object.getPrototypeOf(Day)).call(this, props));
+    // this.state = {
+    //   done: false,
+    //   dispClass: "Day-decorator",
+    //   messages:[],
+    //   score: 0
+    // };
   }
 
   _createClass(Day, [{
     key: 'render',
-
-    // constructor(props){
-    //   super(props);
-    //   this.state{
-    //     done: null
-    //   }
-    // }
     value: function render() {
+      var dispClass = 'Day-decorator';
+      if (this.props.sel) {
+        dispClass = 'Day-current';
+      }
       return _react2.default.createElement(
         'div',
-        { className: 'Day' },
+        { className: "Day " + this.props.date, onClick: this.props.clickHandler },
         _react2.default.createElement(
-          'h3',
-          null,
-          this.props.date
+          'div',
+          { className: dispClass },
+          _react2.default.createElement(
+            'h3',
+            null,
+            this.props.date
+          )
         )
       );
     }
@@ -10207,31 +10224,87 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Month = function (_React$Component) {
   _inherits(Month, _React$Component);
 
-  function Month() {
+  function Month(props) {
     _classCallCheck(this, Month);
 
-    return _possibleConstructorReturn(this, (Month.__proto__ || Object.getPrototypeOf(Month)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Month.__proto__ || Object.getPrototypeOf(Month)).call(this, props));
+
+    _this.state = {
+      selected: null
+    };
+    return _this;
   }
 
   _createClass(Month, [{
+    key: 'handleClick',
+    value: function handleClick(e) {
+      var tDate = Number(e.currentTarget.className.slice(4)) - 1;
+      this.setState({ selected: tDate });
+      console.log('month');
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       //Get amount of days in the current month
       var t = new Date(this.props.year, this.props.month, 0);
       //for every day in the month....
-      console.log(t);
       var numDays = t.getDate();
+      //hold onto state for every day in the month
 
+      console.log(this.state);
       return _react2.default.createElement(
         'div',
         { className: 'Month' },
         _react2.default.createElement(
           'h3',
           null,
-          t.toDateString().slice(4, 7)
+          t.toDateString().slice(4, 7).toUpperCase(),
+          ' ',
+          t.toDateString().slice(11)
+        ),
+        _react2.default.createElement(
+          'ul',
+          { className: 'day-name' },
+          _react2.default.createElement(
+            'li',
+            null,
+            'mon'
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            'tue'
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            'wed'
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            'thu'
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            'fri'
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            'sat'
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            'sun'
+          )
         ),
         Array(numDays).fill(1).map(function (el, i) {
-          return _react2.default.createElement(_Day2.default, { key: i + 1, date: i + 1 });
+          return _react2.default.createElement(_Day2.default, { key: i + 1, date: i + 1, clickHandler: _this2.handleClick.bind(_this2), sel: i === _this2.state.selected });
         })
       );
     }
@@ -10280,7 +10353,7 @@ exports = module.exports = __webpack_require__(33)(undefined);
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "body, html {\n  color: #000;\n  background-color: grey;\n  margin: 0;\n  padding: 0;\n  font-family: sans-serif; }\n", ""]);
 
 // exports
 
@@ -10294,7 +10367,7 @@ exports = module.exports = __webpack_require__(33)(undefined);
 
 
 // module
-exports.push([module.i, ".Day {\n  background-color: #444;\n  width: 14.28571%;\n  float: left;\n  display: inline-block; }\n", ""]);
+exports.push([module.i, "body, html {\n  color: #000;\n  background-color: grey;\n  margin: 0;\n  padding: 0;\n  font-family: sans-serif; }\n\n.Day {\n  text-align: -webkit-center;\n  background-color: #EEE;\n  width: 14.28571%;\n  float: left;\n  display: inline-block; }\n  .Day .Day-decorator, .Day .Day-current {\n    width: 60px;\n    height: 60px;\n    border-radius: 500vh;\n    margin: 50px 0;\n    text-align: center; }\n    .Day .Day-decorator h3, .Day .Day-current h3 {\n      margin: 0;\n      line-height: 60px;\n      text-align: center;\n      display: inline-block; }\n\n.Day-current {\n  color: white;\n  background-color: #ff944d;\n  border: 0px solid #ff944d; }\n\n.Day:hover {\n  background-color: #f5f5f5;\n  font-size: 2em; }\n", ""]);
 
 // exports
 
@@ -10308,7 +10381,7 @@ exports = module.exports = __webpack_require__(33)(undefined);
 
 
 // module
-exports.push([module.i, "body, html {\n  background-color: grey;\n  margin: 0;\n  padding: 0; }\n", ""]);
+exports.push([module.i, "body, html {\n  color: #000;\n  background-color: grey;\n  margin: 0;\n  padding: 0;\n  font-family: sans-serif; }\n", ""]);
 
 // exports
 
@@ -22966,7 +23039,7 @@ exports = module.exports = __webpack_require__(33)(undefined);
 
 
 // module
-exports.push([module.i, ".Month {\n  background-color: cyan;\n  float: left;\n  width: 100%; }\n  .Month h3 {\n    text-align: center; }\n", ""]);
+exports.push([module.i, "body, html {\n  color: #000;\n  background-color: grey;\n  margin: 0;\n  padding: 0;\n  font-family: sans-serif; }\n\n.Month {\n  background-color: white;\n  float: left;\n  width: 75%; }\n  .Month h3 {\n    text-align: center; }\n  .Month .day-name {\n    list-style: none;\n    padding: 0;\n    margin: 0; }\n    .Month .day-name li {\n      text-transform: uppercase;\n      text-align: center;\n      width: 14.28571%;\n      display: inline-block; }\n", ""]);
 
 // exports
 
@@ -22994,6 +23067,51 @@ if(false) {
 	if(!content.locals) {
 		module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/sass-loader/lib/loader.js!./Month.scss", function() {
 			var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/sass-loader/lib/loader.js!./Month.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 197 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(33)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "body, html {\n  color: #000;\n  background-color: grey;\n  margin: 0;\n  padding: 0;\n  font-family: sans-serif; }\n\n.ControlBar {\n  width: 25%;\n  float: right; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 198 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(197);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(52)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/sass-loader/lib/loader.js!./ControlBar.scss", function() {
+			var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/sass-loader/lib/loader.js!./ControlBar.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
