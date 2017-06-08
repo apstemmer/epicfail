@@ -1,5 +1,6 @@
 import React from 'react';
 import Day from './Day';
+import MonthClick from './MonthClick';
 import '../styles/Month.scss';
 
 class Month extends React.Component {
@@ -11,7 +12,8 @@ class Month extends React.Component {
   }
 
   handleClick (e){
-    var tDate = Number(e.currentTarget.className.slice(4)) - 1;
+    var tDate = Number(e.currentTarget.className.slice(4,6)) - 1;
+    
     this.setState({selected:tDate});
     console.log('month');
   }
@@ -19,16 +21,28 @@ class Month extends React.Component {
   render() {
     //Get amount of days in the current month
     var t = new Date(this.props.year,this.props.month,0);
-    //for every day in the month....
-    var numDays = t.getDate();
-    //hold onto state for every day in the month
 
-    console.log(this.state);
+    //number of days in the current month
+    var numDays = t.getDate();
+    var p = new Date();
+    p.setDate(1);
+    var dateArray = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    var preDays = p.getDay() - 1; //number of days to preceed the first day
+    var preDayList = [];
+    for (var i = 0; i < preDays; i++){
+      p.setDate(p.getDate() - 1);
+      preDayList.unshift(<Day notmonth={true} date={p.getDate()} />);
+
+    }
     return (
       <div className="Month">
 
-        <h3>{t.toDateString().slice(4,7).toUpperCase()} {t.toDateString().slice(11)}</h3>
 
+        <div className="topbar">
+          <MonthClick pos={"left"}/>
+          <h3>{t.toDateString().slice(4,7).toUpperCase()} {t.toDateString().slice(11)}</h3>
+          <MonthClick pos={"right"}/>
+        </div>
         <ul className="day-name">
           <li>mon</li>
           <li>tue</li>
@@ -38,17 +52,13 @@ class Month extends React.Component {
           <li>sat</li>
           <li>sun</li>
         </ul>
+        {preDayList}
         {Array(numDays).fill(1).map((el,i) =>
-
           <Day key={i+1} date={i+1} clickHandler={this.handleClick.bind(this)} sel={ i === this.state.selected }/>
         )}
       </div>
     );
   }
 }
-
-// {Array(numDays).fill(1).map((el, i) => {
-//   <Day />
-// })}
 
 export default Month;

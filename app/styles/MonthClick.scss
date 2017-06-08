@@ -1,0 +1,21 @@
+@import "main.scss";
+
+.left{
+  float: left;
+}
+
+.right{
+  float:right;
+}
+
+$navbutton-height: 40px;
+
+.navbutton{
+  text-align: center;
+  background-color: #999999;
+  width: 50px;
+  height: $navbutton-height ;
+  line-height: $navbutton-height;
+  margin: 0 10px;
+  font-weight: 600;
+}

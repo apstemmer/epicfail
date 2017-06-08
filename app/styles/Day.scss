@@ -6,6 +6,7 @@ $circ-rad: 60px;
   text-align: -webkit-center;
   background-color: #EEE;
   width: 1 / 7 * 100%;
+  height: 150px;
   float: left;
   display: inline-block;
   .Day-decorator{
@@ -23,11 +24,10 @@ $circ-rad: 60px;
   }
 }
 
-.Day-current{
-  @extend .Day-decorator ;
-  color: white;
-  background-color: $accent-color;
-  border: 0px solid $accent-color;
+.Day-current .Day-decorator{
+    color: white;
+    background-color: $accent-color;
+    border: 0px solid $accent-color;
 }
 
 .Day:hover{
@@ -36,4 +36,13 @@ $circ-rad: 60px;
   .Day-decorator{
 
   }
+}
+
+.Day-notmonth{
+  background-color: #999;
+}
+
+.Day-notmonth:hover{
+  font-size:inherit;
+  background-color:#999;
 }

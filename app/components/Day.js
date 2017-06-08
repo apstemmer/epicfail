@@ -13,13 +13,15 @@ class Day extends React.Component {
   }
 
   render() {
-    var dispClass = 'Day-decorator';
+    var dispClass = null;
     if(this.props.sel){
       dispClass = 'Day-current';
+    }else if(this.props.notmonth){
+      dispClass = 'Day-notmonth';
     }
     return (
-    <div className={"Day " + this.props.date} onClick={this.props.clickHandler}>
-      <div className={dispClass} >
+    <div className={"Day " + this.props.date + " " + dispClass} onClick={this.props.clickHandler}>
+      <div className="Day-decorator" >
         <h3>{this.props.date}</h3>
       </div>
     </div>);

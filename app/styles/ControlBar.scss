@@ -1,6 +1,14 @@
 @import "main.scss";
 
 .ControlBar{
+  position:fixed;
+  left: $cal-width;
   width: 100% - $cal-width;
-  float:right;
+  h3{
+    text-align: center;
+  }
+}
+
+.login-button{
+  position: relative;
 }

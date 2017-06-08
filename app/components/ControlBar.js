@@ -6,8 +6,9 @@ class ControlBar extends React.Component {
     return (
       <div className="ControlBar">
         <div className="login-button">
-          login
+          logins
         </div>
+        <h3>FAIL?</h3>
       </div>
     );
   }
