@@ -72,10 +72,14 @@ class App extends React.Component {
 
     render(){
 
-      var month = this.state.display.month;
-      var year = this.state.display.year;
+      var month = String(this.state.display.month);
+      var year = String(this.state.display.year);
       var mChange = {left:this.decrementMonth,right:this.incrementMonth};
-      var tickObj = {};
+      var tickObj = this.state.days[year][month];
+      //undefined not reserved hence chekc with typeof
+      if(typeof(tickObj) == 'undefined'){
+        tickObj = {};
+      }
       // if(this.state.days[year] != null && this.state.days[year][month] != null){
       //   tickObj = this.state.days[year][month];
       // }

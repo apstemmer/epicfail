@@ -42,11 +42,11 @@ $circ-rad: 60px;
   }
 }
 
-.Day-notmonth{
+.Day-notmonth, .Day-notmonth:hover{
   background-color: #999;
+  font-size:inherit;
 }
 
-.Day-notmonth:hover{
-  font-size:inherit;
-  background-color:#999;
+.Day-done{
+  background-color: lightgreen;
 }

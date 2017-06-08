@@ -7177,6 +7177,11 @@ var Day = function (_React$Component) {
       } else if (this.props.notmonth) {
         dispClass = 'Day-notmonth';
       }
+
+      if (this.props.rej) {
+        dispClass += " Day-done";
+      }
+
       return _react2.default.createElement(
         'div',
         { className: "Day " + this.props.date + " " + dispClass, onClick: this.props.clickHandler },
@@ -10155,10 +10160,14 @@ var App = function (_React$Component) {
     key: 'render',
     value: function render() {
 
-      var month = this.state.display.month;
-      var year = this.state.display.year;
+      var month = String(this.state.display.month);
+      var year = String(this.state.display.year);
       var mChange = { left: this.decrementMonth, right: this.incrementMonth };
-      var tickObj = {};
+      var tickObj = this.state.days[year][month];
+      //undefined not reserved hence chekc with typeof
+      if (typeof tickObj == 'undefined') {
+        tickObj = {};
+      }
       // if(this.state.days[year] != null && this.state.days[year][month] != null){
       //   tickObj = this.state.days[year][month];
       // }
@@ -10333,7 +10342,6 @@ var Month = function (_React$Component) {
     key: 'handleClick',
     value: function handleClick(e) {
       var tDate = Number(e.currentTarget.className.slice(4, 6)) - 1;
-
       this.setState({ selected: tDate });
       console.log('month');
     }
@@ -10346,16 +10354,18 @@ var Month = function (_React$Component) {
       var t = new Date(this.props.year, this.props.month, 0);
 
       //number of days in the current month
+      //this is a mess! remember to clean it!!
       var numDays = t.getDate();
       var p = new Date(this.props.year, this.props.month - 1, 1);
       var dateArray = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
       var preDays = p.getDay() - 1; //number of days to preceed the first day
       var preDayList = [];
-      console.log(this.props.handleClick.left);
+
       for (var i = 0; i < preDays; i++) {
         p.setDate(p.getDate() - 1);
         preDayList.unshift(_react2.default.createElement(_Day2.default, { notmonth: true, date: p.getDate() }));
       }
+
       return _react2.default.createElement(
         'div',
         { className: 'Month' },
@@ -10413,7 +10423,7 @@ var Month = function (_React$Component) {
         ),
         preDayList,
         Array(numDays).fill(1).map(function (el, i) {
-          return _react2.default.createElement(_Day2.default, { key: i + 1, date: i + 1, clickHandler: _this2.handleClick.bind(_this2), sel: i === _this2.state.selected });
+          return _react2.default.createElement(_Day2.default, { key: i + 1, date: i + 1, clickHandler: _this2.handleClick.bind(_this2), sel: i === _this2.state.selected, rej: _this2.props.ticked[i + 1] ? true : false });
         })
       );
     }
@@ -10486,7 +10496,7 @@ exports = module.exports = __webpack_require__(21)(undefined);
 
 
 // module
-exports.push([module.i, "body, html {\n  color: #000;\n  background-color: grey;\n  margin: 0;\n  padding: 0;\n  font-family: sans-serif; }\n\n.Day {\n  text-align: -webkit-center;\n  background-color: #EEE;\n  width: 14.28571%;\n  height: 150px;\n  float: left;\n  display: inline-block; }\n  .Day .Day-decorator {\n    width: 60px;\n    height: 60px;\n    border-radius: 500vh;\n    margin: 50px 0;\n    text-align: center; }\n    .Day .Day-decorator h3 {\n      margin: 0;\n      line-height: 60px;\n      text-align: center;\n      display: inline-block; }\n\n.Day-current .Day-decorator {\n  -webkit-transition: background-color 0.8s ease;\n  -moz-transition: background-color 0.8s ease;\n  transition: background-color 0.8s ease;\n  background-color: #ff944d;\n  border: 0px solid #ff944d;\n  color: white; }\n\n.Day:hover {\n  background-color: #f5f5f5;\n  font-size: 2em; }\n\n.Day-notmonth {\n  background-color: #999; }\n\n.Day-notmonth:hover {\n  font-size: inherit;\n  background-color: #999; }\n", ""]);
+exports.push([module.i, "body, html {\n  color: #000;\n  background-color: grey;\n  margin: 0;\n  padding: 0;\n  font-family: sans-serif; }\n\n.Day {\n  text-align: -webkit-center;\n  background-color: #EEE;\n  width: 14.28571%;\n  height: 150px;\n  float: left;\n  display: inline-block; }\n  .Day .Day-decorator {\n    width: 60px;\n    height: 60px;\n    border-radius: 500vh;\n    margin: 50px 0;\n    text-align: center; }\n    .Day .Day-decorator h3 {\n      margin: 0;\n      line-height: 60px;\n      text-align: center;\n      display: inline-block; }\n\n.Day-current .Day-decorator {\n  -webkit-transition: background-color 0.8s ease;\n  -moz-transition: background-color 0.8s ease;\n  transition: background-color 0.8s ease;\n  background-color: #ff944d;\n  border: 0px solid #ff944d;\n  color: white; }\n\n.Day:hover {\n  background-color: #f5f5f5;\n  font-size: 2em; }\n\n.Day-notmonth, .Day-notmonth:hover {\n  background-color: #999;\n  font-size: inherit; }\n\n.Day-done {\n  background-color: lightgreen; }\n", ""]);
 
 // exports
 

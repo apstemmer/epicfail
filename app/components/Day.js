@@ -19,6 +19,11 @@ class Day extends React.Component {
     }else if(this.props.notmonth){
       dispClass = 'Day-notmonth';
     }
+
+    if(this.props.rej){
+      dispClass += " Day-done";
+    }
+
     return (
     <div className={"Day " + this.props.date + " " + dispClass} onClick={this.props.clickHandler}>
       <div className="Day-decorator" >
