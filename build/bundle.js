@@ -10082,20 +10082,91 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
 
-  function App() {
+  function App(props) {
     _classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+    var year = 2017;
+    var month = 6;
+    var day = 10;
+    _this.state = {
+      days: {
+        2017: {
+          6: {
+            15: {
+              done: true,
+              msg: "I did it!"
+            }
+          }
+        }
+      },
+      display: {
+        year: year,
+        month: month,
+        day: day
+      }
+    };
+    _this.decrementMonth = _this.decrementMonth.bind(_this);
+    _this.incrementMonth = _this.incrementMonth.bind(_this);
+    return _this;
   }
 
   _createClass(App, [{
+    key: 'decrementMonth',
+    value: function decrementMonth() {
+
+      var mon = this.state.display.month;
+      var year = this.state.display.year;
+      if (mon <= 1) {
+        mon = 12;
+        year--;
+      } else {
+        mon--;
+      }
+      var disp = {
+        year: year,
+        month: mon,
+        day: this.state.display.day
+      };
+
+      this.setState({ display: disp });
+    }
+  }, {
+    key: 'incrementMonth',
+    value: function incrementMonth() {
+      var mon = this.state.display.month;
+      var year = this.state.display.year;
+      if (mon >= 12) {
+        mon = 1;
+        year++;
+      } else {
+        mon++;
+      }
+      var disp = {
+        year: year,
+        month: mon,
+        day: this.state.display.day
+      };
+
+      this.setState({ display: disp });
+    }
+  }, {
     key: 'render',
     value: function render() {
+
+      var month = this.state.display.month;
+      var year = this.state.display.year;
+      var mChange = { left: this.decrementMonth, right: this.incrementMonth };
+      var tickObj = {};
+      // if(this.state.days[year] != null && this.state.days[year][month] != null){
+      //   tickObj = this.state.days[year][month];
+      // }
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(_ControlBar2.default, null),
-        _react2.default.createElement(_Month2.default, { year: '2017', month: '6' })
+        _react2.default.createElement(_Month2.default, { year: year, month: month, ticked: tickObj, handleClick: mChange })
       );
     }
   }]);
@@ -10187,6 +10258,18 @@ var ControlBar = function (_React$Component) {
           'h3',
           null,
           'FAIL?'
+        ),
+        _react2.default.createElement(
+          'form',
+          null,
+          _react2.default.createElement('input', { type: 'checkbox', value: 'Reject' }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'label',
+            null,
+            'you did:',
+            _react2.default.createElement('input', { type: 'text', name: 'name' })
+          )
         )
       );
     }
@@ -10264,11 +10347,11 @@ var Month = function (_React$Component) {
 
       //number of days in the current month
       var numDays = t.getDate();
-      var p = new Date();
-      p.setDate(1);
+      var p = new Date(this.props.year, this.props.month - 1, 1);
       var dateArray = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
       var preDays = p.getDay() - 1; //number of days to preceed the first day
       var preDayList = [];
+      console.log(this.props.handleClick.left);
       for (var i = 0; i < preDays; i++) {
         p.setDate(p.getDate() - 1);
         preDayList.unshift(_react2.default.createElement(_Day2.default, { notmonth: true, date: p.getDate() }));
@@ -10279,7 +10362,7 @@ var Month = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'topbar' },
-          _react2.default.createElement(_MonthClick2.default, { pos: "left" }),
+          _react2.default.createElement(_MonthClick2.default, { pos: "left", handleClick: this.props.handleClick.left }),
           _react2.default.createElement(
             'h3',
             null,
@@ -10287,7 +10370,7 @@ var Month = function (_React$Component) {
             ' ',
             t.toDateString().slice(11)
           ),
-          _react2.default.createElement(_MonthClick2.default, { pos: "right" })
+          _react2.default.createElement(_MonthClick2.default, { pos: "right", handleClick: this.props.handleClick.right })
         ),
         _react2.default.createElement(
           'ul',
@@ -10403,7 +10486,7 @@ exports = module.exports = __webpack_require__(21)(undefined);
 
 
 // module
-exports.push([module.i, "body, html {\n  color: #000;\n  background-color: grey;\n  margin: 0;\n  padding: 0;\n  font-family: sans-serif; }\n\n.Day {\n  text-align: -webkit-center;\n  background-color: #EEE;\n  width: 14.28571%;\n  height: 150px;\n  float: left;\n  display: inline-block; }\n  .Day .Day-decorator {\n    width: 60px;\n    height: 60px;\n    border-radius: 500vh;\n    margin: 50px 0;\n    text-align: center; }\n    .Day .Day-decorator h3 {\n      margin: 0;\n      line-height: 60px;\n      text-align: center;\n      display: inline-block; }\n\n.Day-current .Day-decorator {\n  color: white;\n  background-color: #ff944d;\n  border: 0px solid #ff944d; }\n\n.Day:hover {\n  background-color: #f5f5f5;\n  font-size: 2em; }\n\n.Day-notmonth {\n  background-color: #999; }\n\n.Day-notmonth:hover {\n  font-size: inherit;\n  background-color: #999; }\n", ""]);
+exports.push([module.i, "body, html {\n  color: #000;\n  background-color: grey;\n  margin: 0;\n  padding: 0;\n  font-family: sans-serif; }\n\n.Day {\n  text-align: -webkit-center;\n  background-color: #EEE;\n  width: 14.28571%;\n  height: 150px;\n  float: left;\n  display: inline-block; }\n  .Day .Day-decorator {\n    width: 60px;\n    height: 60px;\n    border-radius: 500vh;\n    margin: 50px 0;\n    text-align: center; }\n    .Day .Day-decorator h3 {\n      margin: 0;\n      line-height: 60px;\n      text-align: center;\n      display: inline-block; }\n\n.Day-current .Day-decorator {\n  -webkit-transition: background-color 0.8s ease;\n  -moz-transition: background-color 0.8s ease;\n  transition: background-color 0.8s ease;\n  background-color: #ff944d;\n  border: 0px solid #ff944d;\n  color: white; }\n\n.Day:hover {\n  background-color: #f5f5f5;\n  font-size: 2em; }\n\n.Day-notmonth {\n  background-color: #999; }\n\n.Day-notmonth:hover {\n  font-size: inherit;\n  background-color: #999; }\n", ""]);
 
 // exports
 
@@ -23172,10 +23255,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var MonthClick = function (_React$Component) {
   _inherits(MonthClick, _React$Component);
 
-  function MonthClick() {
+  function MonthClick(props) {
     _classCallCheck(this, MonthClick);
 
-    return _possibleConstructorReturn(this, (MonthClick.__proto__ || Object.getPrototypeOf(MonthClick)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (MonthClick.__proto__ || Object.getPrototypeOf(MonthClick)).call(this, props));
   }
 
   _createClass(MonthClick, [{
@@ -23185,7 +23268,7 @@ var MonthClick = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: this.props.pos + " navbutton" },
+        { className: this.props.pos + " navbutton", onClick: this.props.handleClick },
         this.props.pos === "left" ? "<" : ">"
       );
     }

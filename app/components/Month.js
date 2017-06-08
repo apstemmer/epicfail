@@ -13,7 +13,7 @@ class Month extends React.Component {
 
   handleClick (e){
     var tDate = Number(e.currentTarget.className.slice(4,6)) - 1;
-    
+
     this.setState({selected:tDate});
     console.log('month');
   }
@@ -24,11 +24,11 @@ class Month extends React.Component {
 
     //number of days in the current month
     var numDays = t.getDate();
-    var p = new Date();
-    p.setDate(1);
+    var p = new Date(this.props.year,this.props.month-1, 1);
     var dateArray = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
     var preDays = p.getDay() - 1; //number of days to preceed the first day
     var preDayList = [];
+    console.log(this.props.handleClick.left);
     for (var i = 0; i < preDays; i++){
       p.setDate(p.getDate() - 1);
       preDayList.unshift(<Day notmonth={true} date={p.getDate()} />);
@@ -39,9 +39,9 @@ class Month extends React.Component {
 
 
         <div className="topbar">
-          <MonthClick pos={"left"}/>
+          <MonthClick pos={"left"} handleClick={this.props.handleClick.left}/>
           <h3>{t.toDateString().slice(4,7).toUpperCase()} {t.toDateString().slice(11)}</h3>
-          <MonthClick pos={"right"}/>
+          <MonthClick pos={"right"} handleClick={this.props.handleClick.right}/>
         </div>
         <ul className="day-name">
           <li>mon</li>

@@ -25,9 +25,13 @@ $circ-rad: 60px;
 }
 
 .Day-current .Day-decorator{
-    color: white;
+
+    -webkit-transition: background-color 0.8s ease;
+    -moz-transition: background-color 0.8s ease;
+    transition: background-color 0.8s ease;
     background-color: $accent-color;
     border: 0px solid $accent-color;
+    color: white;
 }
 
 .Day:hover{

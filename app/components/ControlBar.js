@@ -9,6 +9,15 @@ class ControlBar extends React.Component {
           logins
         </div>
         <h3>FAIL?</h3>
+        <form>
+        <input type="checkbox" value="Reject" />
+        <br />
+        <label>
+          you did:
+          <input type="text" name="name" />
+        </label>
+
+        </form>
       </div>
     );
   }
