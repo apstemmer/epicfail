@@ -10292,12 +10292,21 @@ var ControlBar = function (_React$Component) {
         _react2.default.createElement(
           'h3',
           null,
-          'FAIL?'
+          'FAIL'
         ),
         _react2.default.createElement(
           'form',
           null,
-          _react2.default.createElement('input', { type: 'checkbox', value: 'Reject' }),
+          _react2.default.createElement(
+            'section',
+            { title: '.roundedOne' },
+            _react2.default.createElement(
+              'div',
+              { className: 'roundedOne' },
+              _react2.default.createElement('input', { type: 'checkbox', value: 'reject', id: 'roundedOne', name: 'check' }),
+              _react2.default.createElement('label', { htmlFor: 'roundedOne' })
+            )
+          ),
           _react2.default.createElement('br', null),
           _react2.default.createElement(
             'label',
@@ -10562,7 +10571,7 @@ exports = module.exports = __webpack_require__(18)(undefined);
 
 
 // module
-exports.push([module.i, "body, html {\n  color: #000;\n  background-color: grey;\n  margin: 0;\n  padding: 0;\n  font-family: sans-serif; }\n\n.ControlBar {\n  position: fixed;\n  left: 70%;\n  width: 30%; }\n  .ControlBar h3 {\n    text-align: center; }\n\n.login-button {\n  position: relative; }\n", ""]);
+exports.push([module.i, "body, html {\n  color: #000;\n  background-color: grey;\n  margin: 0;\n  padding: 0;\n  font-family: sans-serif; }\n\n.ControlBar {\n  text-align: center;\n  position: fixed;\n  left: 70%;\n  width: 30%; }\n  .ControlBar h3 {\n    text-align: center; }\n\n.login-button {\n  position: relative; }\n\n.roundedOne {\n  width: 28px;\n  height: 28px;\n  position: relative;\n  margin: 20px auto;\n  background: #fcfff4;\n  background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);\n  border-radius: 50px; }\n  .roundedOne label {\n    width: 20px;\n    height: 20px;\n    cursor: pointer;\n    position: absolute;\n    left: 4px;\n    top: 4px;\n    background: linear-gradient(top, #222 0%, #45484d 100%);\n    border-radius: 50px; }\n    .roundedOne label:after {\n      content: '';\n      width: 16px;\n      height: 16px;\n      position: absolute;\n      top: 2px;\n      left: 2px;\n      background: black;\n      background: linear-gradient(top, black 0%, black 100%);\n      opacity: 0;\n      border-radius: 50px; }\n    .roundedOne label:hover::after {\n      opacity: 0.3; }\n  .roundedOne input[type=checkbox] {\n    visibility: hidden; }\n    .roundedOne input[type=checkbox]:checked + label:after {\n      opacity: 1; }\n\n/* end .roundedOne */\n", ""]);
 
 // exports
 

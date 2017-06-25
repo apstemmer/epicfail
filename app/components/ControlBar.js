@@ -7,9 +7,16 @@ class ControlBar extends React.Component {
     return (
       <div className="ControlBar">
         <FacebookButton />
-        <h3>FAIL?</h3>
+        <h3>FAIL</h3>
         <form>
-        <input type="checkbox" value="Reject" />
+
+        <section title=".roundedOne">
+          <div className="roundedOne">
+            <input type="checkbox" value="reject" id="roundedOne" name="check" />
+            <label htmlFor="roundedOne"></label>
+          </div>
+        </section>
+
         <br />
         <label>
           you did:
