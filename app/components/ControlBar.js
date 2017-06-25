@@ -1,13 +1,12 @@
 import React from 'react';
 import '../styles/ControlBar.scss'
+import FacebookButton from './FacebookButton';
 
 class ControlBar extends React.Component {
   render(){
     return (
       <div className="ControlBar">
-        <div className="login-button">
-          logins
-        </div>
+        <FacebookButton />
         <h3>FAIL?</h3>
         <form>
         <input type="checkbox" value="Reject" />
