@@ -10121,6 +10121,7 @@ var App = function (_React$Component) {
     };
     _this.decrementMonth = _this.decrementMonth.bind(_this);
     _this.incrementMonth = _this.incrementMonth.bind(_this);
+    _this.handleDayChange = _this.handleDayChange.bind(_this);
     return _this;
   }
 
@@ -10157,7 +10158,6 @@ var App = function (_React$Component) {
       } else {
         mon++;
       }
-      console.log(mon, year);
       var disp = {
         year: year,
         month: mon,
@@ -10165,7 +10165,15 @@ var App = function (_React$Component) {
       };
 
       this.setState({ display: disp });
-      console.log(this.state.display);
+    }
+  }, {
+    key: 'handleDayChange',
+    value: function handleDayChange(e) {
+      var tDate = Number(e.currentTarget.className.slice(4, 6));
+      var newState = this.state;
+      newState.display.day = tDate;
+      this.setState(newState);
+      console.log(this.state);
     }
   }, {
     key: 'render',
@@ -10179,10 +10187,8 @@ var App = function (_React$Component) {
       var tickObj = this.state.days[year];
 
       //undefined not reserved hence check with typeof
-      console.log('t');
-      console.log(tickObj);
+
       if (typeof tickObj == 'undefined') {
-        console.log('its undefined');
         tickObj = 'yolo';
       } else {
         var tickObj = tickObj[month];
@@ -10192,16 +10198,12 @@ var App = function (_React$Component) {
         tickObj = false;
       }
       //var monthObj = tickObj[month];
-
-
-      console.log(tickObj);
-
       //tickObj is an object with all the dates that have been done.
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_ControlBar2.default, null),
-        _react2.default.createElement(_Month2.default, { year: year, month: month, ticked: tickObj, handleClick: mChange })
+        _react2.default.createElement(_ControlBar2.default, { date: this.state.display }),
+        _react2.default.createElement(_Month2.default, { year: year, month: month, day: this.state.display.day, ticked: tickObj, handleClick: mChange, handleDayClick: this.handleDayChange })
       );
     }
   }]);
@@ -10276,23 +10278,49 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var ControlBar = function (_React$Component) {
   _inherits(ControlBar, _React$Component);
 
-  function ControlBar() {
+  function ControlBar(props) {
     _classCallCheck(this, ControlBar);
 
-    return _possibleConstructorReturn(this, (ControlBar.__proto__ || Object.getPrototypeOf(ControlBar)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (ControlBar.__proto__ || Object.getPrototypeOf(ControlBar)).call(this, props));
+
+    _this.state = {
+      checked: false,
+      text: null
+    };
+
+    _this.handleCheck = _this.handleCheck.bind(_this);
+    _this.handleWrite = _this.handleWrite.bind(_this);
+    return _this;
   }
 
   _createClass(ControlBar, [{
+    key: 'handleCheck',
+    value: function handleCheck(e) {
+      this.setState({ checked: e.target.checked });
+    }
+  }, {
+    key: 'handleWrite',
+    value: function handleWrite(e) {
+      this.setState({ text: e.target.value });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var year = this.props.date.year;
+      var month = this.props.date.month;
+      var day = this.props.date.day;
       return _react2.default.createElement(
         'div',
         { className: 'ControlBar' },
         _react2.default.createElement(_FacebookButton2.default, null),
         _react2.default.createElement(
-          'h3',
+          'p',
           null,
-          'FAIL'
+          day,
+          ' / ',
+          month,
+          ' / ',
+          year
         ),
         _react2.default.createElement(
           'form',
@@ -10303,7 +10331,7 @@ var ControlBar = function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'roundedOne' },
-              _react2.default.createElement('input', { type: 'checkbox', value: 'reject', id: 'roundedOne', name: 'check' }),
+              _react2.default.createElement('input', { type: 'checkbox', value: 'reject', id: 'roundedOne', name: 'check', onChange: this.handleCheck, unchecked: true }),
               _react2.default.createElement('label', { htmlFor: 'roundedOne' })
             )
           ),
@@ -10312,7 +10340,7 @@ var ControlBar = function (_React$Component) {
             'label',
             null,
             'you did:',
-            _react2.default.createElement('input', { type: 'text', name: 'name' })
+            _react2.default.createElement('input', { type: 'text', name: 'name', onChange: this.handleWrite })
           )
         )
       );
@@ -10365,22 +10393,10 @@ var Month = function (_React$Component) {
   function Month(props) {
     _classCallCheck(this, Month);
 
-    var _this = _possibleConstructorReturn(this, (Month.__proto__ || Object.getPrototypeOf(Month)).call(this, props));
-
-    _this.state = {
-      selected: null
-    };
-    return _this;
+    return _possibleConstructorReturn(this, (Month.__proto__ || Object.getPrototypeOf(Month)).call(this, props));
   }
 
   _createClass(Month, [{
-    key: 'handleClick',
-    value: function handleClick(e) {
-      var tDate = Number(e.currentTarget.className.slice(4, 6)) - 1;
-      this.setState({ selected: tDate });
-      console.log('month');
-    }
-  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -10458,7 +10474,7 @@ var Month = function (_React$Component) {
         ),
         preDayList,
         Array(numDays).fill(1).map(function (el, i) {
-          return _react2.default.createElement(_Day2.default, { key: i + 1, date: i + 1, clickHandler: _this2.handleClick.bind(_this2), sel: i === _this2.state.selected, rej: typeof _this2.props.ticked != 'boolean' && _this2.props.ticked[i + 1] ? true : false });
+          return _react2.default.createElement(_Day2.default, { key: i + 1, date: i + 1, clickHandler: _this2.props.handleDayClick, sel: i === _this2.props.day - 1, rej: typeof _this2.props.ticked != 'boolean' && _this2.props.ticked[i + 1] ? true : false });
         })
       );
     }

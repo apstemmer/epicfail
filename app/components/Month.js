@@ -6,15 +6,6 @@ import '../styles/Month.scss';
 class Month extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selected:null
-    }
-  }
-
-  handleClick (e){
-    var tDate = Number(e.currentTarget.className.slice(4,6)) - 1;
-    this.setState({selected:tDate});
-    console.log('month');
   }
 
   render() {
@@ -53,7 +44,7 @@ class Month extends React.Component {
         </ul>
         {preDayList}
         {Array(numDays).fill(1).map((el,i) =>
-          <Day key={i+1} date={i+1} clickHandler={this.handleClick.bind(this)} sel={ i === this.state.selected } rej={typeof this.props.ticked != 'boolean' && this.props.ticked[i+1] ? true : false }/>
+          <Day key={i+1} date={i+1} clickHandler={this.props.handleDayClick} sel={ i === this.props.day-1 } rej={typeof this.props.ticked != 'boolean' && this.props.ticked[i+1] ? true : false }/>
         )}
       </div>
     );
